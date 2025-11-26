@@ -1,0 +1,15 @@
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: transparent;
+}
+.check-box-input {
+  margin-right: 10px;
+}
+.input-label {
+  color: #f8fafc;
+  font-weight: 400;
+}

@@ -1,0 +1,7 @@
+.jobs-container {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  background-size: cover;
+  height: 100vh;
+}
