@@ -1,15 +1,14 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
-
+import {BsSearch} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
 import ProfileDetails from '../ProfileDetails'
 import FilterEmploymentID from '../FilterEmploymentID'
 import FilterSalaryId from '../FilterSalaryId'
+import FilterLocationId from '../FilterLocationId'
 import JobCard from '../JobCard'
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
-
-import {BsSearch} from 'react-icons/bs'
 
 import './index.css'
 
@@ -58,10 +57,18 @@ const salaryRangesList = [
   },
 ]
 
+const locationsList = [
+  {label: 'Hyderabad', locationId: 'Hyderabad'},
+  {label: 'Bangalore', locationId: 'Bangalore'},
+  {label: 'Chennai', locationId: 'Chennai'},
+  {label: 'Delhi', locationId: 'Delhi'},
+  {label: 'Mumbai', locationId: 'Mumbai'},
+]
 class JobsSection extends Component {
   state = {
     apisStatus: apisStatusList.initial,
     employmentTypeList: [],
+    locationList: [],
     salaryRange: 0,
     searchInput: '',
     jobsList: [],
@@ -74,8 +81,9 @@ class JobsSection extends Component {
   getJobsDetails = async () => {
     this.setState({apisStatus: apisStatusList.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const {employmentTypeList, salaryRange, searchInput} = this.state
-
+    const {employmentTypeList, locationList, salaryRange, searchInput} =
+      this.state
+    console.log(locationList)
     const url = `https://apis.ccbp.in/jobs?employment_type=${employmentTypeList.join()}&minimum_package=${salaryRange}&search=${searchInput}`
     const options = {
       headers: {
@@ -97,10 +105,32 @@ class JobsSection extends Component {
         rating: each.rating,
         title: each.title,
       }))
+
+
       this.setState({
         apisStatus: apisStatusList.success,
         jobsList: updatedJobsList,
       })
+      
+      const {locationList}=this.state
+      console.log(locationList)
+      if (locationList.length>0){
+      const {jobsList}=this.state
+      let updatedJobsListLocationWise=jobsList
+      updatedJobsListLocationWise=locationList.map((eachLocationDetails)=>{
+        console.log(eachLocationDetails)
+        this.setState(prevState=>({jobsList:prevState.jobsList.map((each)=>{
+          if (each.location===eachLocationDetails){
+            return each
+          }
+        })}))
+      })
+
+      this.setState({
+        apisStatus: apisStatusList.success,
+        jobsList: updatedJobsListLocationWise,
+      })}
+     
     } else {
       this.setState({apisStatus: apisStatusList.failure})
     }
@@ -110,7 +140,9 @@ class JobsSection extends Component {
     const {employmentTypeList} = this.state
     let updatedTypeList = employmentTypeList
     if (employmentTypeList.includes(id)) {
-      updatedTypeList = employmentTypeList.filter(each => each !== id)
+      updatedTypeList = employmentTypeList.filter(
+        each => each.employmentTypeId !== id,
+      )
     } else {
       updatedTypeList = [...updatedTypeList, id]
     }
@@ -157,6 +189,32 @@ class JobsSection extends Component {
     </div>
   )
 
+  onAddLocationId = id => {
+    const {locationList} = this.state
+    let updatedLocationList = locationList
+    if (locationList.includes(id)) {
+      updatedLocationList = locationList.filter(each => each.locationId !== id)
+    } else {
+      updatedLocationList = [...updatedLocationList, id]
+    }
+    this.setState({locationList: updatedLocationList},this.getJobsDetails)
+  }
+
+  filterLocation = () => (
+    <div className="filter-location-container">
+      <h1 className="location-heading">Choose Location</h1>
+      <ul className="location-list-container">
+        {locationsList.map(eachLocation => (
+          <FilterLocationId
+            key={eachLocation.locationId}
+            locationDetails={eachLocation}
+            onAddLocationId={this.onAddLocationId}
+          />
+        ))}
+      </ul>
+    </div>
+  )
+
   renderJobsDetails = () => {
     const {apisStatus} = this.state
     switch (apisStatus) {
@@ -183,6 +241,7 @@ class JobsSection extends Component {
 
   renderSuccessView = () => {
     const {jobsList} = this.state
+    
     if (jobsList.length === 0) {
       return (
         <div className="No-jobs-container">
@@ -249,6 +308,7 @@ class JobsSection extends Component {
 
   render() {
     const {searchInput} = this.state
+
     return (
       <div className="jobs-section-container">
         <div className="profile-filter-container">
@@ -257,6 +317,8 @@ class JobsSection extends Component {
           {this.filterEmployment()}
           <hr className="horizontal-line" />
           {this.filterSalary()}
+          <hr className="horizontal-line" />
+          {this.filterLocation()}
         </div>
         <div className="search-job-card-container">
           <div className="search-bar-container">

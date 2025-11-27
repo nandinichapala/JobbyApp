@@ -28,7 +28,11 @@ const Header = props => {
           </Link>
 
           <li className="list-btn-item">
-            <button className="logout-btn" onClick={clickOnLogoutBtn}>
+            <button
+              type="button"
+              className="logout-btn"
+              onClick={clickOnLogoutBtn}
+            >
               Logout
             </button>
           </li>

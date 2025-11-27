@@ -57,6 +57,26 @@
   padding-left: 0px;
   background-color: transparent;
 }
+.filter-location-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.location-heading {
+  color: #f8fafc;
+  font-size: 18px;
+  font-weight: 400;
+}
+.location-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  list-style-type: none;
+  padding-left: 0px;
+  background-color: transparent;
+}
 .search-job-card-container {
   width: 67%;
   display: flex;
