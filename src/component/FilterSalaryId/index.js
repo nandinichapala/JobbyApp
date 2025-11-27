@@ -12,7 +12,7 @@ const FilterSalaryId = props => {
         className="radio-input"
         type="radio"
         id={salaryRangeId}
-        onClick={onClickSalaryRange}
+        onChange={onClickSalaryRange}
         role="radio"
       />
       <label className="input-label" htmlFor={salaryRangeId}>

@@ -13,7 +13,7 @@ const FilterLocationId = props => {
         className="check-box-input"
         type="checkbox"
         id={locationId}
-        onClick={onClickAddLocationId}
+        onChange={onClickAddLocationId}
         role="checkbox"
       />
       <label className="input-label" htmlFor={locationId}>

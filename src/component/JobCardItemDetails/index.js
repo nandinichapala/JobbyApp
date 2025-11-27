@@ -99,7 +99,7 @@ class JobCardItemDetails extends Component {
     const {apisStatus} = this.state
     switch (apisStatus) {
       case apisStatusList.inProgress:
-        return this.renderLodingView()
+        return this.renderLoadingView()
       case apisStatusList.success:
         return this.renderSuccessView()
       case apisStatusList.failure:
@@ -109,7 +109,7 @@ class JobCardItemDetails extends Component {
     }
   }
 
-  renderLodingView = () => (
+  renderLoadingView = () => (
     <div className="card-Item-container">
       <div className="loader-container" data-testid="loader">
         <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
@@ -119,7 +119,7 @@ class JobCardItemDetails extends Component {
 
   renderSuccessView = () => {
     const {jobDetails, skills, lifeAtCompany, similarJobs} = this.state
-    console.log(similarJobs)
+
     const {
       companyLogoUrl,
       companyWebsiteUrl,

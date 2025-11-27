@@ -81,9 +81,9 @@ class JobsSection extends Component {
   getJobsDetails = async () => {
     this.setState({apisStatus: apisStatusList.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const {employmentTypeList, locationList, salaryRange, searchInput} =
+    const { employmentTypeList, locationList, salaryRange, searchInput } =
       this.state
-    console.log(locationList)
+
     const url = `https://apis.ccbp.in/jobs?employment_type=${employmentTypeList.join()}&minimum_package=${salaryRange}&search=${searchInput}`
     const options = {
       headers: {
@@ -106,31 +106,15 @@ class JobsSection extends Component {
         title: each.title,
       }))
 
+      let finalList = updatedJobsList
+      if (locationList.length > 0) {
+        finalList = finalList.filter(job => locationList.includes(job.location))
+      }
 
       this.setState({
         apisStatus: apisStatusList.success,
-        jobsList: updatedJobsList,
+        jobsList: finalList,
       })
-      
-      const {locationList}=this.state
-      console.log(locationList)
-      if (locationList.length>0){
-      const {jobsList}=this.state
-      let updatedJobsListLocationWise=jobsList
-      updatedJobsListLocationWise=locationList.map((eachLocationDetails)=>{
-        console.log(eachLocationDetails)
-        this.setState(prevState=>({jobsList:prevState.jobsList.map((each)=>{
-          if (each.location===eachLocationDetails){
-            return each
-          }
-        })}))
-      })
-
-      this.setState({
-        apisStatus: apisStatusList.success,
-        jobsList: updatedJobsListLocationWise,
-      })}
-     
     } else {
       this.setState({apisStatus: apisStatusList.failure})
     }
@@ -191,13 +175,13 @@ class JobsSection extends Component {
 
   onAddLocationId = id => {
     const {locationList} = this.state
-    let updatedLocationList = locationList
+    let updatedLocationList
     if (locationList.includes(id)) {
-      updatedLocationList = locationList.filter(each => each.locationId !== id)
+      updatedLocationList = locationList.filter(each => each !== id)
     } else {
-      updatedLocationList = [...updatedLocationList, id]
+      updatedLocationList = [...locationList, id]
     }
-    this.setState({locationList: updatedLocationList},this.getJobsDetails)
+    this.setState({locationList: updatedLocationList}, this.getJobsDetails)
   }
 
   filterLocation = () => (
@@ -241,7 +225,7 @@ class JobsSection extends Component {
 
   renderSuccessView = () => {
     const {jobsList} = this.state
-    
+
     if (jobsList.length === 0) {
       return (
         <div className="No-jobs-container">

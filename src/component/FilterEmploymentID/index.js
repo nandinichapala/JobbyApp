@@ -13,7 +13,7 @@ const FilterEmploymentID = props => {
         className="check-box-input"
         type="checkbox"
         id={employmentTypeId}
-        onClick={onClickAddEmploymentId}
+        onChange={onClickAddEmploymentId}
         role="checkbox"
       />
       <label className="input-label" htmlFor={employmentTypeId}>
