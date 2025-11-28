@@ -7,6 +7,7 @@ const FilterLocationId = props => {
   const onClickAddLocationId = () => {
     onAddLocationId(locationId)
   }
+
   return (
     <li className="list-item">
       <input
@@ -14,7 +15,6 @@ const FilterLocationId = props => {
         type="checkbox"
         id={locationId}
         onChange={onClickAddLocationId}
-        role="checkbox"
       />
       <label className="input-label" htmlFor={locationId}>
         {label}

@@ -7,6 +7,7 @@ const FilterEmploymentID = props => {
   const onClickAddEmploymentId = () => {
     onAddEmploymentId(employmentTypeId)
   }
+
   return (
     <li className="list-item">
       <input
@@ -14,7 +15,6 @@ const FilterEmploymentID = props => {
         type="checkbox"
         id={employmentTypeId}
         onChange={onClickAddEmploymentId}
-        role="checkbox"
       />
       <label className="input-label" htmlFor={employmentTypeId}>
         {label}

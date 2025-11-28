@@ -81,8 +81,12 @@ class JobsSection extends Component {
   getJobsDetails = async () => {
     this.setState({apisStatus: apisStatusList.inProgress})
     const jwtToken = Cookies.get('jwt_token')
-    const { employmentTypeList, locationList, salaryRange, searchInput } =
-      this.state
+    const {
+      employmentTypeList,
+      locationList,
+      salaryRange,
+      searchInput,
+    } = this.state
 
     const url = `https://apis.ccbp.in/jobs?employment_type=${employmentTypeList.join()}&minimum_package=${salaryRange}&search=${searchInput}`
     const options = {

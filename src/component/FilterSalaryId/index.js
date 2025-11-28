@@ -6,6 +6,7 @@ const FilterSalaryId = props => {
   const onClickSalaryRange = () => {
     onAddSalaryRange(salaryRangeId)
   }
+
   return (
     <li className="list-item">
       <input
@@ -13,7 +14,6 @@ const FilterSalaryId = props => {
         type="radio"
         id={salaryRangeId}
         onChange={onClickSalaryRange}
-        role="radio"
       />
       <label className="input-label" htmlFor={salaryRangeId}>
         {label}

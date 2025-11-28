@@ -68,6 +68,8 @@ class JobCardItemDetails extends Component {
         name: each.name,
       }))
 
+      console.log(data.job_details.skills)
+
       const updatedSimilarJobs = data.similar_jobs.map(each => ({
         companyLogoUrl: each.company_logo_url,
         employmentType: each.employment_type,
@@ -124,7 +126,6 @@ class JobCardItemDetails extends Component {
       companyLogoUrl,
       companyWebsiteUrl,
       employmentType,
-      id,
       jobDescription,
       location,
       packagePerAnnum,
@@ -173,14 +174,13 @@ class JobCardItemDetails extends Component {
               <BsBoxArrowUpRight className="visit-icon" />
             </a>
           </div>
+
           <p className="card-item-description">{jobDescription}</p>
           <h1 className="skills-heading">Skills</h1>
+
           <ul className="skills-list-container">
-            {skills.map((each, index) => (
-              <li
-                className="skills-item-container"
-                key={`${each.name}-${index}`}
-              >
+            {skills.map(each => (
+              <li className="skills-item-container" key={each.name}>
                 <img
                   src={each.imageUrl}
                   className="skills-image"
@@ -197,7 +197,6 @@ class JobCardItemDetails extends Component {
               src={imageUrl}
               className="lifeatCompany-image"
               alt="life at company"
-              role="img"
             />
           </div>
         </div>
